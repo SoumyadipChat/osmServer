@@ -30,6 +30,11 @@ public class MusicController {
         return musicService.getAllItems(user);
     }
 
+    @RequestMapping("/update/{id}/{title}")
+    public Long updateTitle(@PathVariable("id") Long id,@PathVariable("title") String title){
+        return musicService.editname(id,title);
+    }
+
     @RequestMapping(value = "/saveItem", method= RequestMethod.POST)
     public Long saveVideo(@RequestBody VideoItem video){
         return musicService.addItem(video);
@@ -40,7 +45,5 @@ public class MusicController {
         musicService.deleteItem(video);
         return 1;
     }
-
-
 
 }
