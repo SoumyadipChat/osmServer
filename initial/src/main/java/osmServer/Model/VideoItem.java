@@ -1,11 +1,13 @@
 package osmServer.Model;
 
+import org.springframework.util.StringUtils;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="users")
-public class VideoItem {
+@Table(name="videoitems")
+public class VideoItem implements Comparable<VideoItem>{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +28,25 @@ public class VideoItem {
     @NotBlank
     private String username;
 
+    @Column
+    private String lexoRank;
+
+    @Column
+    private String playlist;
+
+
+
+    public String getPlaylist() {
+        return playlist;
+    }
+
+    public String getLexoRank() {
+        return lexoRank;
+    }
+
+    public void setLexoRank(String lexoRank) {
+        this.lexoRank = lexoRank;
+    }
     public Long getId() {
         return id;
     }
@@ -46,10 +67,23 @@ public class VideoItem {
         return username;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public VideoItem(){
 
     }
 
+    @Override
+    public int compareTo(VideoItem videoItem) {
+        if(StringUtils.isEmpty(this.getLexoRank()) || StringUtils.isEmpty(videoItem.getLexoRank()) || this.getLexoRank().compareTo(videoItem.getLexoRank())==0){
+            return this.getId().compareTo(videoItem.getId());
+        }
+        else {
+            return this.getLexoRank().compareTo(videoItem.getLexoRank());
+        }
+    }
 }
 
 
